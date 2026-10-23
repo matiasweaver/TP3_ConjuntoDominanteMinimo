@@ -1,5 +1,10 @@
 package grafo;
 
+
+import java.util.HashSet;
+import java.util.Set;
+
+
 public class Grafo {
 	// Representamos el grafo por su matriz de adyacencia
 		private boolean[][] A;
