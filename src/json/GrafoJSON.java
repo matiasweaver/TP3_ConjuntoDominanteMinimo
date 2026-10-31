@@ -9,15 +9,14 @@ public class GrafoJSON {
 	public int getCantidadNodos(){
 		return cantidadNodos; 
 	}
-	public void setCantidadNodos(int cantidadNodos) {
-		this.cantidadNodos = cantidadNodos; 
-	}
-
 	public List<AristaJSON> getAristas() { 
 		return aristas; 
 	}
+	public void setCantidadNodos(int cantidadNodos) {
+		this.cantidadNodos = cantidadNodos; 
+	}
+	
 	public void setAristas(List<AristaJSON> aristas) { 
 		this.aristas = aristas; 
 	}
-	
 }
