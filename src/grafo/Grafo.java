@@ -1,6 +1,5 @@
 package grafo;
 
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -84,5 +83,4 @@ public class Grafo {
 			if( i == j )
 				throw new IllegalArgumentException("No se permiten loops: (" + i + ", " + j + ")");
 		}
-
 }

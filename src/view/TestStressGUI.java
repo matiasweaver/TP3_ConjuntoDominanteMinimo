@@ -13,16 +13,10 @@ public class TestStressGUI {
 	private JFrame frame;
 	private JButton btnDetener;
 
-	/**
-	 * Create the application.
-	 */
 	public TestStressGUI() {
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(350, 150, 600, 600);
@@ -48,6 +42,4 @@ public class TestStressGUI {
 	public void mostrarVentana() {
 		frame.setVisible(true);
 	}
-
 }
-
