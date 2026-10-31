@@ -1,4 +1,4 @@
-package goloso;
+package algoritmos;
 
 public class Goloso {
 
