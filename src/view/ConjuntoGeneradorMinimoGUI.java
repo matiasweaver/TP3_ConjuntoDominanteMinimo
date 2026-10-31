@@ -22,7 +22,7 @@ public class ConjuntoGeneradorMinimoGUI {
 	
 	private TestStressGUI testStressGUI;
 	private Presenter presenter;
-	private JFrame frameGUIPrincipal;
+	private JFrame GUIPrincipal;
 	private JLabel txtAlgoritmoGoloso, txtBacktracking;
 	private JTextField textoCargarArchivo;
 	private JButton btnExaminarArchivo, btnEjecutar, btnLimpiar, btnTestStress;
@@ -31,24 +31,11 @@ public class ConjuntoGeneradorMinimoGUI {
 	private JPanel panelGrafoGoloso, panelGrafoBacktracking;;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ConjuntoGeneradorMinimoGUI window = new ConjuntoGeneradorMinimoGUI();
-					window.frameGUIPrincipal.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the application.
 	 */
+	public void mostrarVentana() {
+		this.GUIPrincipal.setVisible(true);
+	}
 
 	public ConjuntoGeneradorMinimoGUI() {
 
@@ -78,10 +65,10 @@ public class ConjuntoGeneradorMinimoGUI {
 	
 	
 	private void inicializarVentanaPrincipal() {
-		frameGUIPrincipal = new JFrame();
-		frameGUIPrincipal.setBounds(100, 100, 1000, 700);
-		frameGUIPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frameGUIPrincipal.getContentPane().setLayout(null);
+		GUIPrincipal = new JFrame();
+		GUIPrincipal.setBounds(100, 100, 1000, 700);
+		GUIPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		GUIPrincipal.getContentPane().setLayout(null);
 	}
 
 	private void inicializarBotonCargarArchivo() {
@@ -91,14 +78,14 @@ public class ConjuntoGeneradorMinimoGUI {
 		textoCargarArchivo.setEditable(false);
 		textoCargarArchivo.setColumns(10);
 		textoCargarArchivo.setBounds(20, 24, 308, 29);
-		frameGUIPrincipal.getContentPane().add(textoCargarArchivo);
+		GUIPrincipal.getContentPane().add(textoCargarArchivo);
 
 		btnExaminarArchivo = new JButton();
 		btnExaminarArchivo.setText("");
 
 		btnExaminarArchivo.setIcon(new ImageIcon(ConjuntoGeneradorMinimoGUI.class.getResource("/recursos/19460311.png")));
 		btnExaminarArchivo.setBounds(338, 24, 35, 35);
-		frameGUIPrincipal.getContentPane().add(btnExaminarArchivo);
+		GUIPrincipal.getContentPane().add(btnExaminarArchivo);
 	}
 
 	/*	private void inicializarBoton(JButton boton, String texto, int x, int y, int w, int a) {
@@ -130,7 +117,7 @@ public class ConjuntoGeneradorMinimoGUI {
 			}
 		});
 		btnEjecutar.setBounds(383, 27, 89, 23);
-		frameGUIPrincipal.getContentPane().add(btnEjecutar);
+		GUIPrincipal.getContentPane().add(btnEjecutar);
 
 	}
 
@@ -150,7 +137,7 @@ public class ConjuntoGeneradorMinimoGUI {
 			}
 		});
 		btnLimpiar.setBounds(840, 27, 89, 23);
-		frameGUIPrincipal.getContentPane().add(btnLimpiar);
+		GUIPrincipal.getContentPane().add(btnLimpiar);
 
 	}
 
@@ -169,12 +156,10 @@ public class ConjuntoGeneradorMinimoGUI {
 					testStressGUI = new TestStressGUI();
 					testStressGUI.mostrarVentana();
 				}
-				testStressGUI = new TestStressGUI();
-				testStressGUI.mostrarVentana();
 			}
 		});
 		btnTestStress.setBounds(645, 27, 155, 23);
-		frameGUIPrincipal.getContentPane().add(btnTestStress);
+		GUIPrincipal.getContentPane().add(btnTestStress);
 
 	}
 
@@ -183,12 +168,12 @@ public class ConjuntoGeneradorMinimoGUI {
 		txtAlgoritmoGoloso = new JLabel();
 		txtAlgoritmoGoloso.setText("ALGORITMO GOLOSO");
 		txtAlgoritmoGoloso.setBounds(153, 117, 155, 14);
-		frameGUIPrincipal.getContentPane().add(txtAlgoritmoGoloso);
+		GUIPrincipal.getContentPane().add(txtAlgoritmoGoloso);
 
 		txtBacktracking = new JLabel();
 		txtBacktracking.setText("BRACKTRACKING");
 		txtBacktracking.setBounds(682, 117, 155, 14);
-		frameGUIPrincipal.getContentPane().add(txtBacktracking);	
+		GUIPrincipal.getContentPane().add(txtBacktracking);	
 
 	}
 
@@ -198,12 +183,12 @@ public class ConjuntoGeneradorMinimoGUI {
 	    JLabel lblTituloGoloso = new JLabel("CONJUNTO MÍNIMO");
 	    lblTituloGoloso.setHorizontalAlignment(SwingConstants.CENTER); 
 	    lblTituloGoloso.setBounds(20, 490, 419, 20);
-	    frameGUIPrincipal.getContentPane().add(lblTituloGoloso);
+	    GUIPrincipal.getContentPane().add(lblTituloGoloso);
 
 	
 	    JSeparator separadorGoloso = new JSeparator();
 	    separadorGoloso.setBounds(20, 515, 419, 2);
-	    frameGUIPrincipal.getContentPane().add(separadorGoloso);
+	    GUIPrincipal.getContentPane().add(separadorGoloso);
 
 
 	    txtConjuntoMinimo1 = new JTextArea();
@@ -213,18 +198,18 @@ public class ConjuntoGeneradorMinimoGUI {
 
 	    scrollConjunto1 = new JScrollPane(txtConjuntoMinimo1);
 	    scrollConjunto1.setBounds(20, 525, 419, 130); 
-	    frameGUIPrincipal.getContentPane().add(scrollConjunto1);
+	    GUIPrincipal.getContentPane().add(scrollConjunto1);
 
 
 	    //Backtracking
 	    JLabel lblTituloBracktracking = new JLabel("CONJUNTO MÍNIMO");
 	    lblTituloBracktracking.setHorizontalAlignment(SwingConstants.CENTER);
 	    lblTituloBracktracking.setBounds(510, 490, 419, 20);
-	    frameGUIPrincipal.getContentPane().add(lblTituloBracktracking);
+	    GUIPrincipal.getContentPane().add(lblTituloBracktracking);
 
 	    JSeparator separadorBack = new JSeparator();
 	    separadorBack.setBounds(510, 515, 419, 2);
-	    frameGUIPrincipal.getContentPane().add(separadorBack);
+	    GUIPrincipal.getContentPane().add(separadorBack);
 
 
 	    txtConjuntoMinimo2 = new JTextArea();
@@ -234,7 +219,7 @@ public class ConjuntoGeneradorMinimoGUI {
 
 	    scrollConjunto2 = new JScrollPane(txtConjuntoMinimo2);
 	    scrollConjunto2.setBounds(510, 525, 419, 130);
-	    frameGUIPrincipal.getContentPane().add(scrollConjunto2);
+	    GUIPrincipal.getContentPane().add(scrollConjunto2);
 	}
 	
 
@@ -243,12 +228,12 @@ public class ConjuntoGeneradorMinimoGUI {
 		panelGrafoGoloso = new JPanel();
 		panelGrafoGoloso.setBounds(20, 140, 419, 340); 
 		panelGrafoGoloso.setLayout(new BorderLayout()); 
-		frameGUIPrincipal.getContentPane().add(panelGrafoGoloso);
+		GUIPrincipal.getContentPane().add(panelGrafoGoloso);
 
 		panelGrafoBacktracking = new JPanel();
 		panelGrafoBacktracking.setBounds(510, 140, 419, 340); 
 		panelGrafoBacktracking.setLayout(new BorderLayout()); 
-		frameGUIPrincipal.getContentPane().add(panelGrafoBacktracking);
+		GUIPrincipal.getContentPane().add(panelGrafoBacktracking);
 	}
 
 	public void mostrarGrafos(Grafo grafoLogico, Set<Integer> solucionGoloso, Set<Integer> solucionBacktracking) {
