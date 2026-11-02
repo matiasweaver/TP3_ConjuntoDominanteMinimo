@@ -282,4 +282,9 @@ public class ConjuntoGeneradorMinimoGUI {
 		graphComponent.setConnectable(false);
 		return graphComponent;
 	}
+
+	public void mostrarError(String string) {
+		// TODO Auto-generated method stub LO QUE SE USA EN PRESENTER
+		
+	}
 }

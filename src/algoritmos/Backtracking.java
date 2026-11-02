@@ -16,7 +16,7 @@ public class Backtracking implements Solver {
 	}
 	
 	public void resolver(Grafo g) {
-		
+		long inicio = System.currentTimeMillis();
 	}
 	
 	private void explorar(Grafo g, int nodoActual, Set<Integer> conjuntoParcial) {
