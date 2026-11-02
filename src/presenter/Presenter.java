@@ -10,7 +10,7 @@ import view.ConjuntoGeneradorMinimoGUI;
 public class Presenter {
 	private Model model;
 	private ConjuntoGeneradorMinimoGUI view;
-	private String rutaArchivoActual;
+	private String rutaArchivo;
 	
 	public Presenter(Model model, ConjuntoGeneradorMinimoGUI view) {
         this.model = model;
@@ -18,7 +18,7 @@ public class Presenter {
     }
 	
 	private void archivoSeleccionado(String ruta) {
-		this.rutaArchivoActual = ruta;
+		this.rutaArchivo = ruta;
 			
 		try {
 			
@@ -42,11 +42,12 @@ public class Presenter {
 	}
 	
 	public void ejecutarAlgoritmo() {
-		if(rutaArchivoActual == null) {
+		if(rutaArchivo == null) {
 			view.mostrarError("Primero selecciona un archivo JSON.");
 			return;
 		}
 		
+		//guardamos el resultado para mostrarlo
 		Set<Integer> solucionGoloso = instanciarYEjecutarGoloso();
 		Set<Integer> solucionBacktracking = instanciarYEjecutarBacktracking();
 		
