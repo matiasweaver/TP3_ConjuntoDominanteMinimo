@@ -1,0 +1,12 @@
+{
+  "cantidadNodos": 6,
+  "aristas": [
+    {"nodoA": 0, "nodoB": 1},
+    {"nodoA": 0, "nodoB": 4},
+    {"nodoA": 1, "nodoB": 2},
+    {"nodoA": 1, "nodoB": 4},
+    {"nodoA": 2, "nodoB": 3},
+    {"nodoA": 3, "nodoB": 4},
+    {"nodoA": 3, "nodoB": 5}
+  ]
+}

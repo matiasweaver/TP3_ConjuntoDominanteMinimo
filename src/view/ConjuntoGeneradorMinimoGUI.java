@@ -79,6 +79,23 @@ public class ConjuntoGeneradorMinimoGUI {
 		btnExaminarArchivo.setIcon(new ImageIcon(ConjuntoGeneradorMinimoGUI.class.getResource("/recursos/19460311.png")));
 		btnExaminarArchivo.setBounds(338, 24, 35, 35);
 		GUIPrincipal.getContentPane().add(btnExaminarArchivo);
+		
+		
+		btnExaminarArchivo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+				int seleccion = fileChooser.showOpenDialog(GUIPrincipal);
+				
+				if (seleccion == JFileChooser.APPROVE_OPTION) {
+					String rutaArchivo = fileChooser.getSelectedFile().getAbsolutePath();
+					textoCargarArchivo.setText(rutaArchivo); // Mostrar ruta en el recuadro
+					
+					if (presenter != null) {
+						presenter.archivoSeleccionado(rutaArchivo); // Avisar al presentador
+					}
+				}
+			}
+		});
 	}
 
 	//POSIBLE ENCAPSULAMIENTO PARA DUPLICACION DE CODIGO
@@ -283,8 +300,35 @@ public class ConjuntoGeneradorMinimoGUI {
 		return graphComponent;
 	}
 
-	public void mostrarError(String string) {
-		// TODO Auto-generated method stub LO QUE SE USA EN PRESENTER
+	public void mostrarError(String mensaje) {
+		JOptionPane.showMessageDialog(GUIPrincipal, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
 		
 	}
-}
+	
+	public void mostrarMensajeExito(String mensaje) {
+		JOptionPane.showMessageDialog(GUIPrincipal, mensaje, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+	}
+
+	public void limpiarPantalla() {
+		
+		    // Vaciar el recuadro que muestra la ruta del archivo
+		    textoCargarArchivo.setText("Cargar archivo JSON");
+		    
+		    // Vaciar los paneles de los grafos
+		    panelGrafoGoloso.removeAll();
+		    panelGrafoBacktracking.removeAll();
+		    
+		    // Vaciar los textos de resultados
+		    txtConjuntoMinimo1.setText("");
+		    txtConjuntoMinimo2.setText("");
+		    
+		    // Refrescar la pantalla
+		    panelGrafoGoloso.revalidate();
+		    panelGrafoGoloso.repaint();
+		    panelGrafoBacktracking.revalidate();
+		    panelGrafoBacktracking.repaint();
+		}
+		
+	}
+	
+

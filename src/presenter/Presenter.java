@@ -1,5 +1,6 @@
 package presenter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import algoritmos.Backtracking;
@@ -17,13 +18,16 @@ public class Presenter {
         this.view = view;
     }
 	
-	private void archivoSeleccionado(String ruta) {
+	public void archivoSeleccionado(String ruta) {
 		this.rutaArchivo = ruta;
 			
 		try {
+			this.model.cargarArchivoDesdeJSON(ruta);
+			this.view.mostrarMensajeExito("Grafo cargado exitosamente. Nodos: " + this.model.getGrafo().tamano());
 			
 		}catch(Exception ex){
 			view.mostrarError("No se pudo cargar el archivo: " + ex.getMessage());
+			this.rutaArchivo = null;
 		}
 	}
 	
@@ -42,21 +46,27 @@ public class Presenter {
 	}
 	
 	public void ejecutarAlgoritmo() {
-		if(rutaArchivo == null) {
+		if(model.getGrafo() == null) {
 			view.mostrarError("Primero selecciona un archivo JSON.");
 			return;
 		}
 		
 		//guardamos el resultado para mostrarlo
 		Set<Integer> solucionGoloso = instanciarYEjecutarGoloso();
-		Set<Integer> solucionBacktracking = instanciarYEjecutarBacktracking();
+		//Set<Integer> solucionBacktracking = instanciarYEjecutarBacktracking();
 		
+		Set<Integer> solucionBacktracking = new HashSet<Integer>(); // Mock temporal hasta implementar backtracking
 		
 		view.mostrarGrafos(model.getGrafo(), solucionGoloso, solucionBacktracking);
 	}
 	
 	public void limpiar() {
-		
+		this.rutaArchivo = null;
+        this.model.setGrafo(null); // Vaciamos el grafo de la memoria
+        
+        // Tendrás que agregar este método en ConjuntoGeneradorMinimoGUI
+        // para que vacíe los paneles y limpie el recuadro de texto de la ruta.
+        this.view.limpiarPantalla();
 	}
 	
 	public void ejecutarTestStress() {
