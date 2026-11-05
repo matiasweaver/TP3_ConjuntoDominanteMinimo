@@ -1,6 +1,7 @@
 package model;
 
 import java.util.HashSet;
+
 import java.util.Set;
 
 import interfaces.Solver;
@@ -26,11 +27,9 @@ public class Goloso implements Solver {
         if (totalVertices == 0) {
             return;
         }
-
        
         boolean[] cubierto = new boolean[totalVertices];
         int cantidadCubiertos = 0;
-
         
         while (cantidadCubiertos < totalVertices) {
             int mejorVertice = seleccionarMejorVertice(grafo, cubierto);
@@ -57,49 +56,44 @@ public class Goloso implements Solver {
                 mejorVertice = i;
             }
         }
-
         return mejorVertice;
     }
 		
     private int contarNuevosCubiertos(Grafo grafo, int vertice, boolean[] cubierto) {
         int nuevosCubiertos = 0;
         
-        //Se evalua el vertice
+        // Se evalua el vertice
         if (!cubierto[vertice]) {
             nuevosCubiertos++;
         }
 
-        //Se evalua los vecinos
+        // Se evalua los vecinos
         for (int vecino : grafo.vecinos(vertice)) {
             if (!cubierto[vecino]) {
                 nuevosCubiertos++;
             }
         }
-
         return nuevosCubiertos;
     }
     
     private int marcarComoCubierto(Grafo grafo, int vertice, boolean[] cubierto) {
         int nuevosCubiertos = 0;
         
-        //Se marca el vertice
+        // Se marca el vertice
         if (!cubierto[vertice]) {
             cubierto[vertice] = true;
             nuevosCubiertos++;
         }
         
-        //Se marca a sus vecinos
+        // Se marca a sus vecinos
         for (int vecino : grafo.vecinos(vertice)) {
             if (!cubierto[vecino]) {
                 cubierto[vecino] = true;
                 nuevosCubiertos++;
             }
         }
-
         return nuevosCubiertos;
     }
-
-    
 		
 	private void limpiarEjecucionAnterior() {
 		this.conjuntoDominante.clear();

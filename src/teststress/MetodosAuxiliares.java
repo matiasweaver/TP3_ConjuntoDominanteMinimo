@@ -4,7 +4,7 @@ import java.util.Random;
 
 import model.Grafo;
 
-public class GeneradorGrafo {
+public class MetodosAuxiliares {
 	public static Grafo generarGrafoAleatorio(int numVertices, double probabilidad) {
 		Grafo g = new Grafo(numVertices);
 		Random rand = new Random();

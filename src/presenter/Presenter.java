@@ -2,24 +2,32 @@ package presenter;
 
 import java.util.HashSet;
 
-
 import java.util.List;
+
 import java.util.Set;
 
 import javax.swing.SwingWorker;
 
 import model.Backtracking;
+
 import model.Goloso;
+
 import model.Grafo;
+
 import model.Model;
-import teststress.GeneradorGrafo;
+
+import teststress.MetodosAuxiliares;
+
 import teststress.TestStressGUI;
+
 import view.ConjuntoGeneradorMinimoGUI;
+
 import interfaces.Solver;
 
 public class Presenter {
 	private Model model;
 	private ConjuntoGeneradorMinimoGUI view;
+	
 	@SuppressWarnings("unused")
 	private String rutaArchivo;
 	private SwingWorker<Void, String> workerStress;
@@ -34,7 +42,7 @@ public class Presenter {
 
 		try {
 			this.model.cargarArchivoDesdeJSON(ruta);
-			this.view.mostrarMensajeExito("Grafo cargado exitosamente. Nodos: " + this.model.getGrafo().tamano());
+			this.view.mostrarMensajeExito("Grafo cargado exitosamente. Nodos: " + this.model.getGrafo().tamano() + "\nPresione 'Ejecutar' para visualizar los resultados.");
 
 		}catch(Exception ex){
 			view.mostrarError("No se pudo cargar el archivo: " + ex.getMessage());
@@ -78,7 +86,7 @@ public class Presenter {
 				int cantidadVertices = 2;
 
 				while (!isCancelled()) {
-					Grafo g = GeneradorGrafo.generarGrafoAleatorio(cantidadVertices, 0.5);
+					Grafo g = MetodosAuxiliares.generarGrafoAleatorio(cantidadVertices, 0.5);
 
 					Backtracking bt = new Backtracking();
 					bt.resolver(g);

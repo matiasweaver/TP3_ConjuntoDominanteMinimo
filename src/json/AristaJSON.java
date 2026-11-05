@@ -7,6 +7,7 @@ public class AristaJSON {
 	public int getNodoA() {
 		return nodoA;
 	}
+	
 	public int getNodoB() {
 		return nodoB;
 	}
@@ -14,6 +15,7 @@ public class AristaJSON {
 	public void setNodoA(int nodoA) {
 		this.nodoA = nodoA;
 	}
+	
 	public void setNodoB(int nodoB) {
 		this.nodoB = nodoB;
 	}

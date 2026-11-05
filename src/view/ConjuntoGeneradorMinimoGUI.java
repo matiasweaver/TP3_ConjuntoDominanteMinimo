@@ -50,6 +50,8 @@ public class ConjuntoGeneradorMinimoGUI {
 	private JFrame GUIPrincipal;
 	private JLabel txtAlgoritmoGoloso, txtBacktracking;
 	private JTextField textoCargarArchivo;
+	
+	@SuppressWarnings("unused")
 	private JButton btnExaminarArchivo, btnEjecutar, btnLimpiar, btnTestStress;
 	private JTextArea txtConjuntoMinimo1, txtConjuntoMinimo2;
 	private JScrollPane scrollConjunto1, scrollConjunto2;
@@ -294,5 +296,3 @@ public class ConjuntoGeneradorMinimoGUI {
 		panelGrafoBacktracking.repaint();
 	}
 }
-	
-

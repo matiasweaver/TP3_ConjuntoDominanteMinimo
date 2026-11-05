@@ -1,12 +1,17 @@
 package tests;
 
 import static org.junit.Assert.*;
+
 import org.junit.Test;
+
 import java.util.HashSet;
+
 import java.util.Set;
 
 import model.Grafo;
+
 import model.Model;
+
 import interfaces.Solver;
 
 public class TestModel {
@@ -28,14 +33,11 @@ public class TestModel {
 		Grafo g = new Grafo(3);
 		model.setGrafo(g);
 
-		// Creamos un Solver falso (Stub) exclusivamente para esta prueba
-		// Esto aísla el test del modelo de los posibles errores en Goloso o Backtracking
 		Solver solverPrueba = new Solver() {
 			private Set<Integer> resultadoFalso = new HashSet<Integer>();
 
 			@Override
 			public void resolver(Grafo g) {
-				// Simulamos que el algoritmo determinó que el nodo 1 es la solución
 				resultadoFalso.add(1); 
 			}
 
@@ -58,7 +60,7 @@ public class TestModel {
 	@Test
 	public void testEjecutarAlgoritmoSinGrafoNoFalla() {
 		Model model = new Model();
-		// No le inyectamos ningún grafo ni solver, no debe lanzar NullPointerException
+
 		try {
 			model.ejecutarAlgoritmo();
 			assertNull(model.getResultado());

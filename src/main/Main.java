@@ -15,7 +15,6 @@ public class Main {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-
 					Model modelo = new Model();
 
 					ConjuntoGeneradorMinimoGUI vista = new ConjuntoGeneradorMinimoGUI();
@@ -32,5 +31,4 @@ public class Main {
 			}
 		});
 	}
-
 }

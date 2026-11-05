@@ -1,12 +1,19 @@
 package teststress;
 
 import java.awt.Color;
+
 import java.awt.event.ActionEvent;
+
 import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
+
 import javax.swing.JFrame;
+
 import javax.swing.JScrollPane;
+
 import javax.swing.JTextArea;
+
 import presenter.Presenter;
 
 public class TestStressGUI {
@@ -16,7 +23,6 @@ public class TestStressGUI {
 	private JTextArea txtResultados;
 	private Presenter presenter;
 
-	// Ahora recibe el presenter por parámetro
 	public TestStressGUI(Presenter presenter) {
 		this.presenter = presenter;
 		initialize();
@@ -39,10 +45,9 @@ public class TestStressGUI {
 		
 		btnDetener.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Llamamos al método del presenter para detener el hilo
 				if (presenter != null) {
 					presenter.detenerTestStress();
-					btnDetener.setEnabled(false); // Deshabilitamos el botón
+					btnDetener.setEnabled(false);
 					agregarMensaje("--- Test detenido por el usuario ---");
 				}
 			}
@@ -50,14 +55,12 @@ public class TestStressGUI {
 		btnDetener.setBounds(130, 410, 130, 30);
 		frame.getContentPane().add(btnDetener);
 
-		// Área de texto con Scroll para mostrar los resultados en vivo
 		txtResultados = new JTextArea();
 		txtResultados.setEditable(false);
 		JScrollPane scrollPane = new JScrollPane(txtResultados);
 		scrollPane.setBounds(20, 20, 340, 370);
 		frame.getContentPane().add(scrollPane);
 		
-		// Si el usuario cierra la ventana con la 'X', también detenemos el proceso
 		frame.addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
 		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -72,10 +75,8 @@ public class TestStressGUI {
 		frame.setVisible(true);
 	}
 
-	// Método para que el presenter inyecte los resultados
 	public void agregarMensaje(String mensaje) {
 		txtResultados.append(mensaje + "\n");
-		// Auto-scroll hacia la última línea
 		txtResultados.setCaretPosition(txtResultados.getDocument().getLength());
 	}
 }
