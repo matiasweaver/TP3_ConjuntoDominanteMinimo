@@ -18,6 +18,8 @@ import com.mxgraph.swing.mxGraphComponent;
 
 import com.mxgraph.view.mxGraph;
 
+import javax.swing.BorderFactory;
+
 import javax.swing.ImageIcon;
 
 import javax.swing.JButton;
@@ -206,13 +208,15 @@ public class ConjuntoGeneradorMinimoGUI {
 
 	private void inicializarPanelesGrafos() {
 		panelGrafoGoloso = new JPanel();
-		panelGrafoGoloso.setBounds(20, 140, 419, 340); 
-		panelGrafoGoloso.setLayout(new BorderLayout()); 
+		panelGrafoGoloso.setBounds(20, 140, 419, 340);
+		panelGrafoGoloso.setLayout(new BorderLayout());
+		panelGrafoGoloso.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		GUIPrincipal.getContentPane().add(panelGrafoGoloso);
 
 		panelGrafoBacktracking = new JPanel();
-		panelGrafoBacktracking.setBounds(510, 140, 419, 340); 
-		panelGrafoBacktracking.setLayout(new BorderLayout()); 
+		panelGrafoBacktracking.setBounds(510, 140, 419, 340);
+		panelGrafoBacktracking.setLayout(new BorderLayout());
+		panelGrafoBacktracking.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		GUIPrincipal.getContentPane().add(panelGrafoBacktracking);
 	}
 

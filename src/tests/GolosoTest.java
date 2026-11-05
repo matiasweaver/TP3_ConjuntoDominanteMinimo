@@ -50,4 +50,28 @@ public class GolosoTest {
         
         assertEquals(0, solverGoloso.getConjuntoDominante().size());
     }
+	
+	@Test
+	public void testGrafoDesconectado() {
+		Grafo grafoDesconectado = new Grafo(4);
+		solverGoloso.resolver(grafoDesconectado);
+		Set<Integer> resultado = solverGoloso.getConjuntoDominante();
+
+		assertEquals(4, resultado.size());
+	}
+
+	@Test
+	public void testGrafoCompleto() {
+		Grafo grafoCompleto = new Grafo(4);
+		for (int i = 0; i < 4; i++) {
+			for (int j = i + 1; j < 4; j++) {
+				grafoCompleto.agregarArista(i, j);
+			}
+		}
+
+		solverGoloso.resolver(grafoCompleto);
+		Set<Integer> resultado = solverGoloso.getConjuntoDominante();
+
+		assertEquals(1, resultado.size());
+	}
 }
