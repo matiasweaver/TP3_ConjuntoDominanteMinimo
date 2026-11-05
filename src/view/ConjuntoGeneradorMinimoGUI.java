@@ -42,15 +42,17 @@ import javax.swing.JTextField;
 
 import javax.swing.SwingConstants;
 
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import java.util.Set;
 
 public class ConjuntoGeneradorMinimoGUI {
-	
+
 	private Presenter presenter;
 	private JFrame GUIPrincipal;
 	private JLabel txtAlgoritmoGoloso, txtBacktracking;
 	private JTextField textoCargarArchivo;
-	
+
 	@SuppressWarnings("unused")
 	private JButton btnExaminarArchivo, btnEjecutar, btnLimpiar, btnTestStress;
 	private JTextArea txtConjuntoMinimo1, txtConjuntoMinimo2;
@@ -59,15 +61,15 @@ public class ConjuntoGeneradorMinimoGUI {
 
 	public ConjuntoGeneradorMinimoGUI() {
 		inicializarVentanaPrincipal();
-		
+
 		inicializarBotonCargarArchivo();
-		
+
 		inicializarBotonesAccion(); 
-		
+
 		inicializarBotonesAlgoritmos();
-		
+
 		iniciaizarTextosConjuntoMinimo();
-		
+
 		inicializarPanelesGrafos();
 	}
 
@@ -78,11 +80,12 @@ public class ConjuntoGeneradorMinimoGUI {
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
 	}
-	
+
 	private void inicializarVentanaPrincipal() {
 		GUIPrincipal = new JFrame();
 		GUIPrincipal.setBounds(100, 100, 1000, 700);
 		GUIPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		GUIPrincipal.setResizable(false);
 		GUIPrincipal.getContentPane().setLayout(null);
 	}
 
@@ -99,16 +102,20 @@ public class ConjuntoGeneradorMinimoGUI {
 		btnExaminarArchivo.setIcon(new ImageIcon(ConjuntoGeneradorMinimoGUI.class.getResource("/recursos/19460311.png")));
 		btnExaminarArchivo.setBounds(338, 24, 35, 35);
 		GUIPrincipal.getContentPane().add(btnExaminarArchivo);
-		
+
 		btnExaminarArchivo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser();
+
+				FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos JSON (*.json)", "json");
+				fileChooser.setFileFilter(filtro);
+
 				int seleccion = fileChooser.showOpenDialog(GUIPrincipal);
-				
+
 				if (seleccion == JFileChooser.APPROVE_OPTION) {
 					String rutaArchivo = fileChooser.getSelectedFile().getAbsolutePath();
 					textoCargarArchivo.setText(rutaArchivo); 
-					
+
 					if (presenter != null) {
 						presenter.archivoSeleccionado(rutaArchivo); 
 					}
@@ -116,9 +123,9 @@ public class ConjuntoGeneradorMinimoGUI {
 			}
 		});
 	}
-	
+
 	private void inicializarBotonesAccion() {
-		
+
 		btnEjecutar = crearBotonEstilizado("Ejecutar", new Color(92, 200, 92), 383, 27, 89, 23, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(presenter != null) {
@@ -153,7 +160,7 @@ public class ConjuntoGeneradorMinimoGUI {
 		boton.setOpaque(true);
 		boton.setBounds(x, y, ancho, alto);
 		boton.addActionListener(accion);
-		
+
 		GUIPrincipal.getContentPane().add(boton);
 		return boton;
 	}
@@ -193,10 +200,10 @@ public class ConjuntoGeneradorMinimoGUI {
 		scrollAsignado = new JScrollPane(txtArea);
 		scrollAsignado.setBounds(x, 525, 419, 130); 
 		GUIPrincipal.getContentPane().add(scrollAsignado);
-		
+
 		return txtArea;
 	}
-	
+
 	private void inicializarPanelesGrafos() {
 		panelGrafoGoloso = new JPanel();
 		panelGrafoGoloso.setBounds(20, 140, 419, 340); 
@@ -229,9 +236,23 @@ public class ConjuntoGeneradorMinimoGUI {
 	}
 
 	private mxGraphComponent crearComponenteGrafo(Grafo grafoLogico, Set<Integer> conjuntoDominante) {
-		mxGraph grafoVisual = new mxGraph();
+
+		mxGraph grafoVisual = new mxGraph() {
+			@Override
+			public boolean isCellMovable(Object cell) {
+				return !getModel().isEdge(cell);
+			}
+			
+			@Override
+			public boolean isCellDisconnectable(Object cell, Object terminal, boolean source) {
+				return false;
+			}
+		};
+
+		grafoVisual.setCellsBendable(false);
+
 		Object capaBase = grafoVisual.getDefaultParent();
-		
+
 		int cantidadNodos = grafoLogico.tamano();
 		Object[] nodosVisuales = new Object[cantidadNodos];
 
@@ -239,20 +260,20 @@ public class ConjuntoGeneradorMinimoGUI {
 		int altoNodo = 30;
 
 		grafoVisual.getModel().beginUpdate();
-		
+
 		try {
 			for (int i = 0; i < cantidadNodos; i++) {
 				String colorNodo;
-				
+
 				if (conjuntoDominante != null && conjuntoDominante.contains(i)) {
 					colorNodo = "shape=ellipse;fillColor=#ff6666"; 
 				} else {
 					colorNodo = "shape=ellipse;fillColor=lightblue";
 				}
-				
+
 				nodosVisuales[i] = grafoVisual.insertVertex(capaBase, null, String.valueOf(i), 0, 0, anchoNodo, altoNodo, colorNodo);
 			}
-			
+
 			for (int i = 0; i < cantidadNodos; i++) {
 				for (int j = i + 1; j < cantidadNodos; j++) {
 					if (grafoLogico.existeArista(i, j)) {
@@ -269,27 +290,27 @@ public class ConjuntoGeneradorMinimoGUI {
 
 		mxGraphComponent componenteFinal = new mxGraphComponent(grafoVisual);
 		componenteFinal.setConnectable(false); 
-		
+
 		return componenteFinal;
 	}
 
 	public void mostrarError(String mensaje) {
 		JOptionPane.showMessageDialog(GUIPrincipal, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
 	}
-	
+
 	public void mostrarMensajeExito(String mensaje) {
 		JOptionPane.showMessageDialog(GUIPrincipal, mensaje, "Éxito", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	public void limpiarPantalla() {
 		textoCargarArchivo.setText("Cargar archivo JSON");
-		
+
 		panelGrafoGoloso.removeAll();
 		panelGrafoBacktracking.removeAll();
-		
+
 		txtConjuntoMinimo1.setText("");
 		txtConjuntoMinimo2.setText("");
-		
+
 		panelGrafoGoloso.revalidate();
 		panelGrafoGoloso.repaint();
 		panelGrafoBacktracking.revalidate();

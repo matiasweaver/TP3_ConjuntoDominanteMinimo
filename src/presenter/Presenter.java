@@ -45,7 +45,7 @@ public class Presenter {
 			this.view.mostrarMensajeExito("Grafo cargado exitosamente. Nodos: " + this.model.getGrafo().tamano() + "\nPresione 'Ejecutar' para visualizar los resultados.");
 
 		}catch(Exception ex){
-			view.mostrarError("No se pudo cargar el archivo: " + ex.getMessage());
+			view.mostrarError("No se pudo cargar el archivo. Tiene que ser de tipo .json");
 			this.rutaArchivo = null;
 		}
 	}

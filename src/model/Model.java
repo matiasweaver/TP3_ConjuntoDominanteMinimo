@@ -15,28 +15,32 @@ public class Model {
 	private Grafo grafo;
 
 	public void cargarArchivoDesdeJSON(String rutaArchivo) {
-        GrafoJSON datosLeidos = ArchivoJSON.leerArchivo(rutaArchivo);
-        
-        if (datosLeidos != null) {
-            
-            this.grafo = new Grafo(datosLeidos.getCantidadNodos());
-            
-            if (datosLeidos.getAristas() != null) {
-                for (AristaJSON arista : datosLeidos.getAristas()) {
-                    this.grafo.agregarArista(arista.getNodoA(), arista.getNodoB());
-                }
-            }
-        }
+		GrafoJSON datosLeidos = ArchivoJSON.leerArchivo(rutaArchivo);
+
+		if(datosLeidos == null) {
+			throw new RuntimeException("El archivo está vacío o no tiene la estructura JSON esperada.");
+		}
+		
+		this.grafo = new Grafo(datosLeidos.getCantidadNodos());
+
+		if (datosLeidos.getAristas() != null) {
+			for (AristaJSON arista : datosLeidos.getAristas()) {
+				int nodoA = arista.getNodoA() - 1;
+				int nodoB = arista.getNodoB() - 1;
+				
+				this.grafo.agregarArista(nodoA, nodoB);
+			}
+		}
 	}
-	
+
 	public Grafo getGrafo() {
 		return this.grafo;
 	}
-	
-    public void setGrafo(Grafo grafo) {
-        this.grafo = grafo;
-    }
-	
+
+	public void setGrafo(Grafo grafo) {
+		this.grafo = grafo;
+	}
+
 	public void setSolver(Solver nuevoSolver) {
 		this.solver = nuevoSolver;
 	}

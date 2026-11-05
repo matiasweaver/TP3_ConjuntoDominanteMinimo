@@ -13,12 +13,9 @@ public class Goloso implements Solver {
 		return this.conjuntoDominante;
 	}
 
-	public Goloso() {
-		this.conjuntoDominante = new HashSet<Integer>();
-	}
-
 	@Override
     public void resolver(Grafo grafo) {
+		this.conjuntoDominante = new HashSet<Integer>();
 		
         limpiarEjecucionAnterior();
         

@@ -32,6 +32,7 @@ public class TestStressGUI {
 		frame = new JFrame();
 		frame.setBounds(350, 150, 400, 500);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setResizable(false);
 		frame.getContentPane().setLayout(null);
 		frame.setTitle("Test de Stress - Backtracking");
 
