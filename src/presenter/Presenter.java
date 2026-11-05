@@ -1,6 +1,8 @@
 package presenter;
 
 import java.util.HashSet;
+
+
 import java.util.List;
 import java.util.Set;
 
@@ -13,6 +15,7 @@ import model.Model;
 import teststress.GeneradorGrafo;
 import view.ConjuntoGeneradorMinimoGUI;
 import view.TestStressGUI;
+import interfaces.Solver;
 
 public class Presenter {
 	private Model model;
@@ -38,33 +41,29 @@ public class Presenter {
 		}
 	}
 
-	private Set<Integer> instanciarYEjecutarGoloso() {
-		Goloso goloso = new Goloso();
-		model.setSolver(goloso);
-		model.ejecutarAlgoritmo();
-		return model.getResultado();
-	}
-
-	private Set<Integer> instanciarYEjecutarBacktracking() {
-		Backtracking backtracking = new Backtracking();
-		model.setSolver(backtracking);
-		model.ejecutarAlgoritmo();
-		return model.getResultado();
-	}
-
 	public void ejecutarAlgoritmo() {
-		if(model.getGrafo() == null) {
-			view.mostrarError("Primero selecciona un archivo JSON.");
-			return;
-		}
+	    if (model.getGrafo() == null) {
+	        view.mostrarError("Primero selecciona un archivo JSON.");
+	        return;
+	    }
 
-		//guardamos el resultado para mostrarlo
-		Set<Integer> solucionGoloso = instanciarYEjecutarGoloso();
-		//Set<Integer> solucionBacktracking = instanciarYEjecutarBacktracking();
+	    // Ejecutamos ambas estrategias utilizando un método reutilizable
+	    Set<Integer> solucionGoloso = ejecutarEstrategia(new Goloso());
+	    
+	    // Si Backtracking ya funciona, lo dejas así. Si no, pasas un mock manual.
+	    Set<Integer> solucionBacktracking = ejecutarEstrategia(new Backtracking()); 
 
-		Set<Integer> solucionBacktracking = instanciarYEjecutarBacktracking(); // Mock temporal hasta implementar backtracking
+	    view.mostrarGrafos(model.getGrafo(), solucionGoloso, solucionBacktracking);
+	}
 
-		view.mostrarGrafos(model.getGrafo(), solucionGoloso, solucionBacktracking);
+	// Un solo método privado que sirve para cualquier Solver actual o futuro
+	private Set<Integer> ejecutarEstrategia(Solver estrategia) {
+	    model.setSolver(estrategia);
+	    model.ejecutarAlgoritmo();
+	    
+	    // Retornamos un "new HashSet" para garantizar que creamos una copia en memoria 
+	    // y no arrastramos referencias compartidas que puedan pisar los datos.
+	    return new HashSet<>(model.getResultado()); 
 	}
 
 	public void limpiar() {
