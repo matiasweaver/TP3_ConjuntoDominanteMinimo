@@ -1,8 +1,9 @@
-package algoritmos;
+package model;
 
 import java.util.HashSet;
+
 import java.util.Set;
-import grafo.Grafo;
+
 import interfaces.Solver;
 
 public class Backtracking implements Solver {

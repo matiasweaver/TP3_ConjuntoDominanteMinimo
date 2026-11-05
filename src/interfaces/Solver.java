@@ -1,7 +1,8 @@
 package interfaces;
 
 import java.util.Set;
-import grafo.Grafo;
+
+import model.Grafo;
 
 public interface Solver {
 	Set<Integer> getConjuntoDominante();

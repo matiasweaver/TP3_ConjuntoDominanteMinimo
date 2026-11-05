@@ -2,7 +2,7 @@ package teststress;
 
 import java.util.Random;
 
-import grafo.Grafo;
+import model.Grafo;
 
 public class GeneradorGrafo {
 	public static Grafo generarGrafoAleatorio(int numVertices, double probabilidad) {

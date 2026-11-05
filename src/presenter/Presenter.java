@@ -8,13 +8,13 @@ import java.util.Set;
 
 import javax.swing.SwingWorker;
 
-import algoritmos.Backtracking;
-import algoritmos.Goloso;
-import grafo.Grafo;
+import model.Backtracking;
+import model.Goloso;
+import model.Grafo;
 import model.Model;
 import teststress.GeneradorGrafo;
+import teststress.TestStressGUI;
 import view.ConjuntoGeneradorMinimoGUI;
-import view.TestStressGUI;
 import interfaces.Solver;
 
 public class Presenter {

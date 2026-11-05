@@ -5,8 +5,8 @@ import org.junit.Test;
 import java.util.HashSet;
 import java.util.Set;
 
+import model.Grafo;
 import model.Model;
-import grafo.Grafo;
 import interfaces.Solver;
 
 public class TestModel {

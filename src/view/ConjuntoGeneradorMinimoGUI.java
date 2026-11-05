@@ -1,26 +1,51 @@
 package view;
 
-import java.awt.EventQueue;
-import javax.swing.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import com.mxgraph.layout.mxCircleLayout;
-import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.view.mxGraph;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.util.Set;
-import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
-import javax.swing.GroupLayout.Alignment;
-import grafo.Grafo;
+import model.Grafo;
+
 import presenter.Presenter;
 
+import java.awt.event.ActionListener;
+
+import java.awt.event.ActionEvent;
+
+import java.awt.BorderLayout;
+
+import java.awt.Color;
+
+import com.mxgraph.layout.mxCircleLayout;
+
+import com.mxgraph.swing.mxGraphComponent;
+
+import com.mxgraph.view.mxGraph;
+
+import javax.swing.ImageIcon;
+
+import javax.swing.JButton;
+
+import javax.swing.JFileChooser;
+
+import javax.swing.JFrame;
+
+import javax.swing.JLabel;
+
+import javax.swing.JOptionPane;
+
+import javax.swing.JPanel;
+
+import javax.swing.JScrollPane;
+
+import javax.swing.JSeparator;
+
+import javax.swing.JTextArea;
+
+import javax.swing.JTextField;
+
+import javax.swing.SwingConstants;
+
+import java.util.Set;
 
 public class ConjuntoGeneradorMinimoGUI {
 	
-	private TestStressGUI testStressGUI;
 	private Presenter presenter;
 	private JFrame GUIPrincipal;
 	private JLabel txtAlgoritmoGoloso, txtBacktracking;
@@ -28,35 +53,29 @@ public class ConjuntoGeneradorMinimoGUI {
 	private JButton btnExaminarArchivo, btnEjecutar, btnLimpiar, btnTestStress;
 	private JTextArea txtConjuntoMinimo1, txtConjuntoMinimo2;
 	private JScrollPane scrollConjunto1, scrollConjunto2;
-	private JPanel panelGrafoGoloso, panelGrafoBacktracking;;
+	private JPanel panelGrafoGoloso, panelGrafoBacktracking;
+
+	public ConjuntoGeneradorMinimoGUI() {
+		inicializarVentanaPrincipal();
+		
+		inicializarBotonCargarArchivo();
+		
+		inicializarBotonesAccion(); 
+		
+		inicializarBotonesAlgoritmos();
+		
+		iniciaizarTextosConjuntoMinimo();
+		
+		inicializarPanelesGrafos();
+	}
 
 	public void mostrarVentana() {
 		this.GUIPrincipal.setVisible(true);
 	}
 
-	public ConjuntoGeneradorMinimoGUI() {
-
-		inicializarVentanaPrincipal();
-
-		inicializarBotonCargarArchivo();
-
-		inicializarBotonEjecutar();
-
-		inicializarBotonLimpiar();
-
-		inicializarBotonPruebaStress();
-
-		inicializarBotonesAlgoritmos();
-
-		iniciaizarTextosConjuntoMinimo();
-
-		inicializarPanelesGrafos();
-	}
-
 	public void setPresenter(Presenter presenter) {
 		this.presenter = presenter;
 	}
-
 	
 	private void inicializarVentanaPrincipal() {
 		GUIPrincipal = new JFrame();
@@ -75,11 +94,9 @@ public class ConjuntoGeneradorMinimoGUI {
 
 		btnExaminarArchivo = new JButton();
 		btnExaminarArchivo.setText("");
-
 		btnExaminarArchivo.setIcon(new ImageIcon(ConjuntoGeneradorMinimoGUI.class.getResource("/recursos/19460311.png")));
 		btnExaminarArchivo.setBounds(338, 24, 35, 35);
 		GUIPrincipal.getContentPane().add(btnExaminarArchivo);
-		
 		
 		btnExaminarArchivo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -88,89 +105,55 @@ public class ConjuntoGeneradorMinimoGUI {
 				
 				if (seleccion == JFileChooser.APPROVE_OPTION) {
 					String rutaArchivo = fileChooser.getSelectedFile().getAbsolutePath();
-					textoCargarArchivo.setText(rutaArchivo); // Mostrar ruta en el recuadro
+					textoCargarArchivo.setText(rutaArchivo); 
 					
 					if (presenter != null) {
-						presenter.archivoSeleccionado(rutaArchivo); // Avisar al presentador
+						presenter.archivoSeleccionado(rutaArchivo); 
 					}
 				}
 			}
 		});
 	}
-
-	//POSIBLE ENCAPSULAMIENTO PARA DUPLICACION DE CODIGO
-	/*	private void inicializarBoton(JButton boton, String texto, int x, int y, int w, int a) {
-		boton = new JButton();
-		boton.setText(texto);
-		boton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		boton.setBounds(805, 27, 155, 23);
-		frameGUIPrincipal.getContentPane().add(boton);
-
-	}
-	 */
-
-	private void inicializarBotonEjecutar() {
-		btnEjecutar = new JButton();
-		btnEjecutar.setText("Ejecutar");
-		btnEjecutar.setBackground(new Color(92, 200, 92));
-		btnEjecutar.setForeground(Color.BLACK);
-		btnEjecutar.setFocusPainted(false); 
-		btnEjecutar.setContentAreaFilled(false); 
-		btnEjecutar.setOpaque(true);
-		btnEjecutar.addActionListener(new ActionListener() {
+	
+	private void inicializarBotonesAccion() {
+		
+		btnEjecutar = crearBotonEstilizado("Ejecutar", new Color(92, 200, 92), 383, 27, 89, 23, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(presenter != null) {
 					presenter.ejecutarAlgoritmo();
 				}
 			}
 		});
-		btnEjecutar.setBounds(383, 27, 89, 23);
-		GUIPrincipal.getContentPane().add(btnEjecutar);
-	}
 
-	private void inicializarBotonLimpiar() {
-		btnLimpiar = new JButton();
-		btnLimpiar.setText("Limpiar");
-		btnLimpiar.setBackground(new Color(255, 102, 102)); 
-		btnLimpiar.setForeground(Color.BLACK);
-		btnLimpiar.setFocusPainted(false);
-		btnLimpiar.setContentAreaFilled(false);
-		btnLimpiar.setOpaque(true);
-		btnLimpiar.addActionListener(new ActionListener() {
+		btnTestStress = crearBotonEstilizado("Prueba de stress", new Color(255, 102, 102), 645, 27, 155, 23, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(presenter != null) {
+					presenter.ejecutarTestStress(); 
+				}
+			}
+		});
+
+		btnLimpiar = crearBotonEstilizado("Limpiar", new Color(255, 102, 102), 840, 27, 89, 23, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(presenter != null) {
 					presenter.limpiar();
 				}
 			}
 		});
-		btnLimpiar.setBounds(840, 27, 89, 23);
-		GUIPrincipal.getContentPane().add(btnLimpiar);
 	}
 
-	private void inicializarBotonPruebaStress() {
-		btnTestStress = new JButton();
-		btnTestStress.setText("Prueba de stress");
-		btnTestStress.setBackground(new Color(255, 102, 102)); 
-		btnTestStress.setForeground(Color.BLACK);
-		btnTestStress.setFocusPainted(false);
-		btnTestStress.setContentAreaFilled(false);
-		btnTestStress.setOpaque(true);
+	private JButton crearBotonEstilizado(String texto, Color colorFondo, int x, int y, int ancho, int alto, ActionListener accion) {
+		JButton boton = new JButton(texto);
+		boton.setBackground(colorFondo);
+		boton.setForeground(Color.BLACK);
+		boton.setFocusPainted(false);
+		boton.setContentAreaFilled(false);
+		boton.setOpaque(true);
+		boton.setBounds(x, y, ancho, alto);
+		boton.addActionListener(accion);
 		
-		btnTestStress.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(presenter != null) {
-					// Solo delegamos al presenter. 
-					// El presenter instanciará la ventana y correrá el hilo.
-					presenter.ejecutarTestStress(); 
-				}
-			}
-		});
-		
-		btnTestStress.setBounds(645, 27, 155, 23);
-		GUIPrincipal.getContentPane().add(btnTestStress);
+		GUIPrincipal.getContentPane().add(boton);
+		return boton;
 	}
 
 	private void inicializarBotonesAlgoritmos() {
@@ -180,53 +163,36 @@ public class ConjuntoGeneradorMinimoGUI {
 		GUIPrincipal.getContentPane().add(txtAlgoritmoGoloso);
 
 		txtBacktracking = new JLabel();
-		txtBacktracking.setText("BRACKTRACKING");
+		txtBacktracking.setText("BACKTRACKING");
 		txtBacktracking.setBounds(682, 117, 155, 14);
 		GUIPrincipal.getContentPane().add(txtBacktracking);	
 	}
 
 	private void iniciaizarTextosConjuntoMinimo() {
-		//Algoritmo Goloso
-	    JLabel lblTituloGoloso = new JLabel("CONJUNTO MÍNIMO");
-	    lblTituloGoloso.setHorizontalAlignment(SwingConstants.CENTER); 
-	    lblTituloGoloso.setBounds(20, 490, 419, 20);
-	    GUIPrincipal.getContentPane().add(lblTituloGoloso);
+		txtConjuntoMinimo1 = crearPanelResultado(20, scrollConjunto1);
+		txtConjuntoMinimo2 = crearPanelResultado(510, scrollConjunto2);
+	}
 
-	
-	    JSeparator separadorGoloso = new JSeparator();
-	    separadorGoloso.setBounds(20, 515, 419, 2);
-	    GUIPrincipal.getContentPane().add(separadorGoloso);
+	private JTextArea crearPanelResultado(int x, JScrollPane scrollAsignado) {
+		JLabel lblTitulo = new JLabel("CONJUNTO MÍNIMO");
+		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER); 
+		lblTitulo.setBounds(x, 490, 419, 20);
+		GUIPrincipal.getContentPane().add(lblTitulo);
 
+		JSeparator separador = new JSeparator();
+		separador.setBounds(x, 515, 419, 2);
+		GUIPrincipal.getContentPane().add(separador);
 
-	    txtConjuntoMinimo1 = new JTextArea();
-	    txtConjuntoMinimo1.setEditable(false);
-	    txtConjuntoMinimo1.setLineWrap(true);
-	    txtConjuntoMinimo1.setWrapStyleWord(true);
+		JTextArea txtArea = new JTextArea();
+		txtArea.setEditable(false);
+		txtArea.setLineWrap(true);
+		txtArea.setWrapStyleWord(true);
 
-	    scrollConjunto1 = new JScrollPane(txtConjuntoMinimo1);
-	    scrollConjunto1.setBounds(20, 525, 419, 130); 
-	    GUIPrincipal.getContentPane().add(scrollConjunto1);
-
-
-	    //Algoritmo Backtracking
-	    JLabel lblTituloBracktracking = new JLabel("CONJUNTO MÍNIMO");
-	    lblTituloBracktracking.setHorizontalAlignment(SwingConstants.CENTER);
-	    lblTituloBracktracking.setBounds(510, 490, 419, 20);
-	    GUIPrincipal.getContentPane().add(lblTituloBracktracking);
-
-	    JSeparator separadorBack = new JSeparator();
-	    separadorBack.setBounds(510, 515, 419, 2);
-	    GUIPrincipal.getContentPane().add(separadorBack);
-
-
-	    txtConjuntoMinimo2 = new JTextArea();
-	    txtConjuntoMinimo2.setEditable(false);
-	    txtConjuntoMinimo2.setLineWrap(true);
-	    txtConjuntoMinimo2.setWrapStyleWord(true);
-
-	    scrollConjunto2 = new JScrollPane(txtConjuntoMinimo2);
-	    scrollConjunto2.setBounds(510, 525, 419, 130);
-	    GUIPrincipal.getContentPane().add(scrollConjunto2);
+		scrollAsignado = new JScrollPane(txtArea);
+		scrollAsignado.setBounds(x, 525, 419, 130); 
+		GUIPrincipal.getContentPane().add(scrollAsignado);
+		
+		return txtArea;
 	}
 	
 	private void inicializarPanelesGrafos() {
@@ -242,24 +208,18 @@ public class ConjuntoGeneradorMinimoGUI {
 	}
 
 	public void mostrarGrafos(Grafo grafoLogico, Set<Integer> solucionGoloso, Set<Integer> solucionBacktracking) {
-		// 1. Limpiar los paneles (por si el usuario presiona "Ejecutar" varias veces)
 		panelGrafoGoloso.removeAll();
 		panelGrafoBacktracking.removeAll();
 
-		// 2. Crear los componentes de JGraphX (aquí asumo que tienes un método 'crearComponenteGrafo' 
-		// similar al que te pasé en respuestas anteriores)
 		mxGraphComponent componenteGoloso = crearComponenteGrafo(grafoLogico, solucionGoloso);
 		mxGraphComponent componenteBacktracking = crearComponenteGrafo(grafoLogico, solucionBacktracking);
 
-		// 3. Inyectar los componentes en los paneles de tu ventana
 		panelGrafoGoloso.add(componenteGoloso, BorderLayout.CENTER);
 		panelGrafoBacktracking.add(componenteBacktracking, BorderLayout.CENTER);
 
-		// 4. Actualizar las cajas de texto de abajo
 		txtConjuntoMinimo1.setText("Tamaño: " + solucionGoloso.size() + " - Nodos: " + solucionGoloso.toString());
 		txtConjuntoMinimo2.setText("Tamaño: " + solucionBacktracking.size() + " - Nodos: " + solucionBacktracking.toString());
 
-		// 5. Refrescar la interfaz gráfica (obligatorio cuando agregas cosas dinámicamente)
 		panelGrafoGoloso.revalidate();
 		panelGrafoGoloso.repaint();
 		panelGrafoBacktracking.revalidate();
@@ -267,44 +227,52 @@ public class ConjuntoGeneradorMinimoGUI {
 	}
 
 	private mxGraphComponent crearComponenteGrafo(Grafo grafoLogico, Set<Integer> conjuntoDominante) {
-		mxGraph graph = new mxGraph();
-		Object parent = graph.getDefaultParent();
-		int n = grafoLogico.tamano();
-		Object[] vertices = new Object[n];
+		mxGraph grafoVisual = new mxGraph();
+		Object capaBase = grafoVisual.getDefaultParent();
+		
+		int cantidadNodos = grafoLogico.tamano();
+		Object[] nodosVisuales = new Object[cantidadNodos];
 
-		graph.getModel().beginUpdate();
+		int anchoNodo = 30;
+		int altoNodo = 30;
+
+		grafoVisual.getModel().beginUpdate();
+		
 		try {
-			// Dibujar nodos
-			for (int i = 0; i < n; i++) {
-				String estilo = (conjuntoDominante != null && conjuntoDominante.contains(i)) 
-						? "shape=ellipse;fillColor=#ff6666" 
-								: "shape=ellipse;fillColor=lightblue";
-				vertices[i] = graph.insertVertex(parent, null, String.valueOf(i), 0, 0, 30, 30, estilo);
+			for (int i = 0; i < cantidadNodos; i++) {
+				String colorNodo;
+				
+				if (conjuntoDominante != null && conjuntoDominante.contains(i)) {
+					colorNodo = "shape=ellipse;fillColor=#ff6666"; 
+				} else {
+					colorNodo = "shape=ellipse;fillColor=lightblue";
+				}
+				
+				nodosVisuales[i] = grafoVisual.insertVertex(capaBase, null, String.valueOf(i), 0, 0, anchoNodo, altoNodo, colorNodo);
 			}
-			// Dibujar aristas
-			for (int i = 0; i < n; i++) {
-				for (int j = i + 1; j < n; j++) {
+			
+			for (int i = 0; i < cantidadNodos; i++) {
+				for (int j = i + 1; j < cantidadNodos; j++) {
 					if (grafoLogico.existeArista(i, j)) {
-						graph.insertEdge(parent, null, "", vertices[i], vertices[j], "endArrow=none");
+						grafoVisual.insertEdge(capaBase, null, "", nodosVisuales[i], nodosVisuales[j], "endArrow=none");
 					}
 				}
 			}
 		} finally {
-			graph.getModel().endUpdate();
+			grafoVisual.getModel().endUpdate();
 		}
 
-		// Ordenar en círculo
-		mxCircleLayout layout = new mxCircleLayout(graph);
-		layout.execute(parent);
+		mxCircleLayout layoutCircular = new mxCircleLayout(grafoVisual);
+		layoutCircular.execute(capaBase);
 
-		mxGraphComponent graphComponent = new mxGraphComponent(graph);
-		graphComponent.setConnectable(false);
-		return graphComponent;
+		mxGraphComponent componenteFinal = new mxGraphComponent(grafoVisual);
+		componenteFinal.setConnectable(false); 
+		
+		return componenteFinal;
 	}
 
 	public void mostrarError(String mensaje) {
 		JOptionPane.showMessageDialog(GUIPrincipal, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
-		
 	}
 	
 	public void mostrarMensajeExito(String mensaje) {
@@ -312,25 +280,19 @@ public class ConjuntoGeneradorMinimoGUI {
 	}
 
 	public void limpiarPantalla() {
+		textoCargarArchivo.setText("Cargar archivo JSON");
 		
-		    // Vaciar el recuadro que muestra la ruta del archivo
-		    textoCargarArchivo.setText("Cargar archivo JSON");
-		    
-		    // Vaciar los paneles de los grafos
-		    panelGrafoGoloso.removeAll();
-		    panelGrafoBacktracking.removeAll();
-		    
-		    // Vaciar los textos de resultados
-		    txtConjuntoMinimo1.setText("");
-		    txtConjuntoMinimo2.setText("");
-		    
-		    // Refrescar la pantalla
-		    panelGrafoGoloso.revalidate();
-		    panelGrafoGoloso.repaint();
-		    panelGrafoBacktracking.revalidate();
-		    panelGrafoBacktracking.repaint();
-		}
+		panelGrafoGoloso.removeAll();
+		panelGrafoBacktracking.removeAll();
 		
+		txtConjuntoMinimo1.setText("");
+		txtConjuntoMinimo2.setText("");
+		
+		panelGrafoGoloso.revalidate();
+		panelGrafoGoloso.repaint();
+		panelGrafoBacktracking.revalidate();
+		panelGrafoBacktracking.repaint();
 	}
+}
 	
 

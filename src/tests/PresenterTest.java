@@ -5,10 +5,10 @@ import org.junit.Before;
 import org.junit.Test;
 import java.util.Set;
 
+import model.Grafo;
 import model.Model;
 import presenter.Presenter;
 import view.ConjuntoGeneradorMinimoGUI;
-import grafo.Grafo;
 
 public class PresenterTest {
 

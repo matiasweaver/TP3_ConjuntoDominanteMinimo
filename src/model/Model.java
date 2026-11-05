@@ -2,8 +2,6 @@ package model;
 
 import java.util.Set;
 
-import algoritmos.Goloso;
-import grafo.Grafo;
 import interfaces.Solver;
 import json.ArchivoJSON;
 import json.AristaJSON;
