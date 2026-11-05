@@ -158,15 +158,17 @@ public class ConjuntoGeneradorMinimoGUI {
 		btnTestStress.setFocusPainted(false);
 		btnTestStress.setContentAreaFilled(false);
 		btnTestStress.setOpaque(true);
+		
 		btnTestStress.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(presenter != null) {
-					presenter.ejecutarTestStress();
-					testStressGUI = new TestStressGUI();
-					testStressGUI.mostrarVentana();
+					// Solo delegamos al presenter. 
+					// El presenter instanciará la ventana y correrá el hilo.
+					presenter.ejecutarTestStress(); 
 				}
 			}
 		});
+		
 		btnTestStress.setBounds(645, 27, 155, 23);
 		GUIPrincipal.getContentPane().add(btnTestStress);
 	}
